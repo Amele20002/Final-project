@@ -64,12 +64,12 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });*/
-const express = require('express');
+/*const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
 const axios = require('axios');
 const app = express();
-const PORT = 3000;
+const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -129,5 +129,86 @@ app.get('/weather', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);*/
+//});
+// index.js
+const express = require('express');
+const cors = require('cors');
+const pool = require('./db');
+const axios = require('axios');
+require('dotenv').config();
+
+const app = express();
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// Connect to External API (Example: RandomUser API)
+app.get('/api/external', async (req, res) => {
+    try {
+        const response = await axios.get('https://randomuser.me/api/');
+        res.status(200).json({ message: 'External API data retrieved successfully', data: response.data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error fetching external API data' });
+    }
 });
+
+// GET all students
+app.get('/students', async (req, res) => {
+    try {
+        const [students] = await pool.query('SELECT * FROM students');
+        res.status(200).json({ message: 'Students retrieved successfully', response: students });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error retrieving students' });
+    }
+});
+
+// POST a new student
+app.post('/students', async (req, res) => {
+    try {
+        const { student_id, first_name, last_name, email, date_of_birth } = req.body;
+        await pool.query(
+            'INSERT INTO students (student_id, first_name, last_name, email, date_of_birth) VALUES (?, ?, ?, ?, ?)',
+            [student_id, first_name, last_name, email, date_of_birth]
+        );
+        res.status(201).json({ message: 'Student added successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error adding student' });
+    }
+});
+
+// PUT update a student
+app.put('/students/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { first_name, last_name, email } = req.body;
+        await pool.query(
+            'UPDATE students SET first_name = ?, last_name = ?, email = ? WHERE student_id = ?',
+            [first_name, last_name, email, id]
+        );
+        res.status(200).json({ message: 'Student updated successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error updating student' });
+    }
+});
+
+// DELETE a student
+app.delete('/students/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await pool.query('DELETE FROM students WHERE student_id = ?', [id]);
+        res.status(200).json({ message: 'Student deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Error deleting student' });
+    }
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

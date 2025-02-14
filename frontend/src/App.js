@@ -38,7 +38,7 @@ function App() {
     );
 }
 
-export default App;*/
+export default App;
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import axios from 'axios';
@@ -64,7 +64,7 @@ function App() {
 
     // Fetch courses
     useEffect(() => {
-        axios.get('http://localhost:3000/courses')
+        axios.get('http://localhost:5000/courses')
             .then(response => setCourses(response.data.response))
             .catch(error => console.error(error));
     }, []);
@@ -86,6 +86,57 @@ function App() {
                 <Route path="/weather" element={<Weather weather={weather} />} />
             </Routes>
             <Footer />
+        </Router>
+    );
+}
+
+export default App;
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import StudentList from './components/StudentList';
+import StudentForm from './components/StudentForm';
+import CourseList from './components/CourseList'; // Import the CourseList component
+
+function App() {
+    return (
+        <Router>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<StudentList />} />
+                <Route path="/add-student" element={<StudentForm />} />
+                <Route path="/courses" element={<CourseList />} /> {/* Add this route */}
+            //</Routes>
+        //</Router>
+    //);
+//}
+
+//export default App;*/
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import StudentList from './components/StudentList';
+import StudentForm from './components/StudentForm';
+import CourseList from './components/CourseList';
+import './App.css'; // Import global styles
+
+function App() {
+    return (
+        <Router>
+            {/* Navbar is displayed on all pages */}
+            <Navbar />
+
+            {/* Define routes for different pages */}
+            <Routes>
+                {/* Home page - displays the list of students */}
+                <Route path="/" element={<StudentList />} />
+
+                {/* Page to add a new student */}
+                <Route path="/add-student" element={<StudentForm />} />
+
+                {/* Page to display the list of courses */}
+                <Route path="/courses" element={<CourseList />} />
+            </Routes>
         </Router>
     );
 }
