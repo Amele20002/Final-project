@@ -1,0 +1,13 @@
+.home {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .animate {
+    animation: fadeIn 2s;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
