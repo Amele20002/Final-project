@@ -17,7 +17,7 @@ CREATE TABLE courses (
 -- Create enrollments table (to link students and courses)
 CREATE TABLE enrollments (
     enrollment_id SERIAL PRIMARY KEY,
-    student_id INT REFERENCES students(student_id),
+    student_id INT REFERENCES Students(student_id),
     course_id INT REFERENCES courses(course_id),
     enrollment_date DATE NOT NULL
 );

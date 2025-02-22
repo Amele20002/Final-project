@@ -10,14 +10,14 @@ A full-stack web application for managing student records. It includes a React f
 
 ## Technologies Used
 - **Frontend**: React, Axios, React Router, Tailwind CSS
-- **Backend**: Node.js, Express, MySQL
+- **Backend**: Node.js, Express, postgresql
 - **Other Tools**: GitHub, Postman (for API testing)
 
 ## Setup Instructions
 
 ### Prerequisites
 - Node.js and npm installed.
-- MySQL installed and running.
+- postgresql installed and running.
 
 ### Backend
 1. Navigate to the `backend` folder:
