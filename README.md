@@ -25,17 +25,12 @@ Before running the project, ensure the following are installed:
 
 ### Backend
 1. Navigate to the `backend` folder:
-   ```bash
    cd backend
 2. Install dependencies:
-
-bash
-Copy
 npm install
 3. Create a .env file in the backend folder and add the following:
 
-env
-Copy
+.env
 PORT=3001
 DB_USER=your_db_username
 DB_HOST=localhost
